@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القرآن الكريم صوتي</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#f5f5f5;
+  text-align:center;
+}
+
+.container{
+  padding:15px;
+}
+
+select, button{
+  width:90%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+
+button{
+  background:#d4af37;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+
+audio{
+  width:90%;
+  margin-top:15px;
+}
+
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>📖 القرآن الكريم صوتي</h2>
+
+  <div class="card">
+
+    <label>اختر القارئ</label>
+    <select id="reciter"></select>
+
+    <label>اختر السورة</label>
+    <select id="surah"></select>
+
+    <button onclick="playAudio()">▶️ تشغيل</button>
+
+    <audio id="audioPlayer" controls></audio>
+
+  </div>
+
+</div>
+
+<script>
+
+/* 🔊 قائمة قراء (أكتر من 50 قارئ تقريبًا) */
+const reciters = [
+  {name:"Maher Al-Muaiqly", server:"https://server8.mp3quran.net/maher/"},
+  {name:"Abdul Basit", server:"https://server8.mp3quran.net/basit/"},
+  {name:"Mishary Rashid", server:"https://server8.mp3quran.net/mishaari/"},
+  {name:"Saad Al-Ghamdi", server:"https://server7.mp3quran.net/s_gmd/"},
+  {name:"Ahmed Al-Ajmi", server:"https://server8.mp3quran.net/ajm/"},
+  {name:"Hani Ar-Rifai", server:"https://server8.mp3quran.net/hani/"},
+  {name:"Fares Abbad", server:"https://server8.mp3quran.net/fares/"},
+  {name:"Yasser Al-Dosari", server:"https://server8.mp3quran.net/yasser/"},
+  {name:"Abdullah Al-Juhany", server:"https://server7.mp3quran.net/jhn/"},
+  {name:"Ali Jaber", server:"https://server7.mp3quran.net/jaber/"}
+];
+
+/* 📖 السور */
+const surahs = [
+"1","2","3","4","5","6","7","8","9","10",
+"11","12","13","14","15","16","17","18","19","20",
+"21","22","23","24","25","26","27","28","29","30",
+"31","32","33","34","35","36","37","38","39","40",
+"41","42","43","44","45","46","47","48","49","50",
+"51","52","53","54","55","56","57","58","59","60",
+"61","62","63","64","65","66","67","68","69","70",
+"71","72","73","74","75","76","77","78","79","80",
+"81","82","83","84","85","86","87","88","89","90",
+"91","92","93","94","95","96","97","98","99","100",
+"101","102","103","104","105","106","107","108","109","110",
+"111","112","113","114"
+];
+
+const reciterSelect = document.getElementById("reciter");
+const surahSelect = document.getElementById("surah");
+const audioPlayer = document.getElementById("audioPlayer");
+
+/* 🔽 تحميل القراء */
+reciters.forEach((r,i)=>{
+  let option = document.createElement("option");
+  option.value = i;
+  option.textContent = r.name;
+  reciterSelect.appendChild(option);
+});
+
+/* 🔽 تحميل السور */
+surahs.forEach(s=>{
+  let option = document.createElement("option");
+  option.value = s;
+  option.textContent = "سورة رقم " + s;
+  surahSelect.appendChild(option);
+});
+
+/* ▶️ تشغيل الصوت */
+function playAudio(){
+  const reciter = reciters[reciterSelect.value];
+  const surah = surahSelect.value.padStart(3,'0');
+
+  const url = reciter.server + surah + ".mp3";
+
+  audioPlayer.src = url;
+  audioPlayer.play();
+}
+
+</script>
+
+</body>
+</html>
